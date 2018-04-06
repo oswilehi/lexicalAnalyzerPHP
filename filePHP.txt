@@ -1,0 +1,1277 @@
+true
+TRUE
+// $4jeje
+abstract
+define('DEBUG',0);
+// define(  ' DEBUG',   0);
+<?php echo '<p>Hola Mundo</p>'; ?>
+<?php phpinfo(); ?>
+<?php
+function test()
+{
+1$a = 0;
+echo $a;
+$a++;
+}
+?>
+<?php
+function test()
+{
+static $count = 0;
+
+$count++;
+echo $count;
+if ($count < 10) {
+test();
+}
+$count--;
+}
+?>
+$recordset['JEJE'];
+$recordset['cambiando_campos'];
+$recordset['CamBiando_los_campos'];
+$recordset['esto_es_un_campo'];
+<?php
+echo 'Esto es una prueba'; // Esto es un comentario al estilo de c++ de una sola linea
+/* Esto es un comentario multilinea
+y otra lina de comentarios */
+echo 'Esto es otra prueba';
+echo 'Una prueba final'; # Esto es un comentario al estilo de consola de una sola linea */
+?>
+<?php
+if ($a > $b) {
+echo "a is bigger than b";
+} elseif ($a == $b) {
+echo "a is equal to b";
+} ELSE {
+echo "a is smaller than b";
+}
+?>
+<?php
+
+$path = "/home/user/file.txt";
+if (!file_exists($path))
+exit("File not found");
+$file = fopen($path, "r");
+if ($file) {
+while (($line = fgets($file)) !== false) {
+echo $line;
+}
+if (!feof($file)) {
+echo "Error: EOF not found\n";
+}
+fclose($file);
+}
+
+?>
+<?php
+$path = "data.txt";
+if (file_exists($path))
+$file = fopen($path, "r+");
+else
+$file = fopen($path, "a+");
+while ($data = fread($file,154)) {
+$array[] = explode('|',$data);
+};
+
+if (isset($_GET['get'])) {
+$curr = (int)$_GET['get'];
+$item = $array[$curr];
+} else if (isset($_GET['delete'])) {
+$curr = (int)$_GET['delete'];
+fseek($file,$curr*154,SEEK_SET);
+fwrite($file,'**deleted**');
+$array[$curr][0] = '**deleted**';
+$item = array('','','','','');
+$curr = 0;
+} else if (isset($_GET['save'])) {
+$curr = (int)$_GET['save'];
+$item = array(str_pad($_GET['name'],30),
+str_pad($_GET['work'],30),
+str_pad($_GET['mobile'],30),
+str_pad($_GET['email'],30),
+str_pad($_GET['address'],30));
+fseek($file,$curr*154,SEEK_SET);
+fwrite($file,implode('|',$item));
+$array[$curr] = $item;
+} else if (isset($_GET['append'])) {
+$item = array('','','','','');
+$curr = sizeof($array);
+};
+
+fclose($file);
+?>
+<?php
+echo "<table border=1>";
+$n=1;
+for ($n1=1; $n1<=10; $n1++)
+{
+echo "<tr>";
+for ($n2=1; $n2<=10; $n2++)
+{
+echo "<td>", $n, "</td>";
+$n=$n+1;
+}
+echo "</tr>";
+}
+echo "</table>";
+?>
+<?php
+#ejemplode.com
+$archivo = file_get_contents("archivo.txt"); //Guardamos archivo.txt en $archivo
+$archivo = ucfirst($archivo); //Le damos un poco de formato
+$archivo = nl2br($archivo); //Transforma todos los saltos de linea en tag <br/>
+echo "<strong>Archivo de texto archivo.txt:</strong> ";
+echo $archivo;
+function sumatorio ($n) {
+$resultado = 0;
+while ( $n >= 1 ) {
+$resultado = $resultado + $n;
+$n = $n - 1;
+}
+return $resultado;
+}
+?>
+<?php
+$a = 1234; // numero decimal
+$a = -123; // un numero negativo
+$a = 0123; // numero octal (equivale a 83 decimal)
+$a = 0x1A; // numero hexadecimal (equivale a 26 decimal)
+$a = 0b11111111; // numero binario (equivale al 255 decimal)
+?>
+<?php
+$a = 1.234;
+$b = 1.2e3;
+$c = 7E-10;
+?>
+<?php
+$a = 1.23456789;
+$b = 1.23456780;
+$epsilon = 0.00001;
+
+if(abs($a-$b) < $epsilon) {
+echo "true";
+}
+?>
+<?php
+var_dump(25/7);         // float(3.5714285714286)
+var_dump((int) (25/7)); // int(3)
+var_dump(round(25/7));  // float(4)
+?>
+<?php
+echo (int) ( (0.1+0.7) * 10 ); // ¡muestra 7!
+?>
+<?php
+function float_max($mul = 2, $affine = 1) {
+$max = 1; $omax = 0;
+while((string)$max != 'INF') { $omax = $max; $max *= $mul; }
+
+for($i = 0; $i < $affine; $i++) {
+$pmax = 1; $max = $omax;
+while((string)$max != 'INF') {
+$omax = $max;
+$max += $pmax;
+$pmax *= $mul;
+}
+}
+return $omax;
+}
+?>
+<?php
+include __diR__ . '/../data/config.php';
+include __Dir__ . '/../include/PeclDb.php';
+use rmtools as rm;
+$longopts = array("help", "refresh", "dump-queue", "dump-all", "no-fetch", "force-fetch", "enable-pre");
+$options = getopt(NULL, $longopts);
+$refresh_db = isset($options['refresh']);
+$dump_queue = isset($options['dump-queue']);
+$dump_all = isset($options['dump-all']);
+$help = isset($options['help']);
+$no_fetch = isset($options['no-fetch']);
+$force_fetch = isset($options['force-fetch']);
+$enable_pre = isset($options['enable-pre']);
+/* --help */
+if ($_SERVER['argc'] <= 1 || $help) {
+echo "Usage: pecl_rss.php [OPTION] ..." . PHP_EOL;
+echo "  --refresh       Read new data from the PECL RSS feed and save it to db, optional." . PHP_EOL;
+echo "  --dump-queue    Dump the db rows with zero built timestamp and exit, optional." . PHP_EOL;
+echo "  --dump-all      Dump all the db rows, optional." . PHP_EOL;
+echo "  --no-fetch      Only update db, don't fetch. Only used with --refresh, optional." . PHP_EOL;
+echo "  --force-fetch   Fetch all the items and reupdate db. Only used with --refresh, optional." . PHP_EOL;
+echo "  --enable-pre    Create an additional copy of package to build against an unstable PHP version, optional." . PHP_EOL;
+echo "  --help          Show help and exit, optional." . PHP_EOL;
+echo PHP_EOL;
+echo "Example: pecl_rss --refresh" . PHP_EOL;
+echo PHP_EOL;
+exit(0);
+}
+if ($no_fetch && $force_fetch) {
+echo "Decide!" . PHP_EOL;
+sleep(3);
+echo "Either you need fetch or not <(o )" . PHP_EOL;
+exit(3);
+}
+$db_path = __DIR__ . '/../data/pecl.sqlite';
+$db = new rmeclDb($db_path);
+/* --dump-queue */
+if ($dump_queue) {
+$db->dumpQueue();
+exit(0);
+}
+/* --dump-all */
+if ($dump_all) {
+$db->dump();
+exit(0);
+}
+/* --refresh, need to wrap it all with ifs maybe*/
+echo "Refreshing the data" . PHP_EOL;
+$rss = 'https://pecl.php.net/feeds/latest.rss';
+echo "Fetching $rss" . PHP_EOL;
+$latest = simplexml_load_file($rss);
+if (!isset($latest->item)) {
+echo "No items could be found in $rss" . PHP_EOL;
+}
+/* FIXME Use a separate config for this! */
+$curl = 'C:\apps\bin\curl.exe';
+$get_url_tpl = 'https://pecl.php.net/get/{name}/{version}';
+$download_dir = 'c:\php-snap-build\in-pkg\release';
+$download_dir_pre = 'c:\php-snap-build\in-pkg\snap-pre';
+foreach($latest->item as $item) {
+if (!$item->title) {
+continue;
+}
+$tmp = explode(' ', (string)$item->title);
+$name = $tmp[0];
+$version = $tmp[1];
+if (!$name || !$version) {
+continue;
+}
+and
+AND
+or
+Or
+if (!$no_fetch) {
+$get_url = str_replace(
+array('{name}', '{version}'),
+array($name, $version),
+$get_url_tpl
+);
+/* XXX -k is needed as the host is good known, but the download can fail on
+certain versions because of certs */
+$curl_cmd = $curl . ' -s -L -J -O -k ' . $get_url;
+$back = getcwd();
+chdir($download_dir);
+$suspects = glob(strtolower($name) . "-" . strtolower($version) . "*");
+if ($force_fetch) {
+if ($db->exists($name, $version)) {
+echo "<$name-$version> forcing download" . PHP_EOL;
+}
+foreach ($suspects as $f) {
+if (file_exists($f)) {
+unlink($f);
+}
+}
+} else if ($db->done($name, $version)) {
+echo "<$name-$version> is already done" . PHP_EOL;
+continue;
+} else if ($db->exists($name, $version)) {
+/* XXX no check if file exists here, but should be */
+echo "<$name-$version> is already in the queue" . PHP_EOL;
+continue;
+}
+if (!$suspects) {
+system($curl_cmd, $status);
+if ($enable_pre) {
+copy("$name-$version.tgz", "$download_dir_pre" . DIRECTORY_SEPARATOR . "$name-$version.tgz");
+}
+if ($status) {
+echo "<$name-$version> download failed" . PHP_EOL;
+chdir($back);
+continue;
+}
+}
+chdir($back);
+}
+if (!$db->exists($name, $version) && $db->add($name, $version, $force_fetch)) {
+echo "<$name-$version> added to the queue" . PHP_EOL;
+}
+/*
+* when need more, look here (or /r) using name and version
+* $url = 'https://pecl.php.net/rest/p/';
+*/
+}
+exit(0);
+<?php
+namespace rmtools;
+$required_exts = array(
+'openssl',
+'curl',
+'sqlite3',
+'simplexml',
+'dom',
+'json',
+'mbstring',
+'zlib',
+);
+foreach ($required_exts as $ext) {
+if (!extension_loaded($ext)) {
+die("'$ext' extension is not loaded but required, full rquired extensions list: " . implode(", ", $required_exts));
+}
+}
+$tmp = getenv('PHP_RMTOOLS_TMP_PATH');
+if (!$tmp) {
+throw new \Exception("Temporary path '$tmp' doesn't exist");
+}
+define('TMP_DIR', $tmp);
+/* XXX might remove this later */
+$custom_env = array();
+<?php
+include __DIR__ . '/../data/config.php';
+include __DIR__ . '/../include/Branch.php';
+include __DIR__ . '/../include/Tools.php';
+use rmtools as rm;
+if ($argc < 2 || $argc > 4) {
+echo "Usage: snapshot <branch> <config name> [force 1/0]\n";
+exit();
+}
+$have_build_run = false;
+$branch_name = $argv[1];
+$build_type = $argv[2];
+$force = isset($argv[3]) && $argv[3] ? true : false;
+$sdk_arch = getenv("PHP_SDK_ARCH");
+if (!$sdk_arch) {
+throw new \Exception("Arch is empty, the SDK might not have been setup. ");
+}
+$all_branch_confs_path = __DIR__ . '/../data/config/branch';
+$config_path = $all_branch_confs_path . '/' . $sdk_arch . '/' . $branch_name . '.ini';
+$req_builds_num = rm\BranchConfig::getRequiredBuildsNum($all_branch_confs_path, $branch_name);
+$err_msg = NULL;
+try {
+$branch = new rm\Branch($config_path, $req_builds_num);
+} catch (\Exception $e) {
+$err_msg = $e->getMessage();
+goto out_here;
+}
+if (!$branch->requiredBuildRunsReached() && $branch->numBuildsRunning() == $req_builds_num) {
+$err_msg = "Waiting for " . $branch->getLastRevisionId() . " builds to finish.";
+goto out_here;
+}
+$branch_name = $branch->config->getName();
+$branch_name_short = $branch->config->getBranch();
+echo "Running <" . realpath($config_path) . ">\n";
+echo "\t$branch_name\n";
+//var_dump($branch->hasNewRevision(), !$branch->isLastRevisionExported($branch->getLastCommitId()) && $branch->hasUnfinishedBuild());
+if ($branch->hasNewRevision() || !$branch->isLastRevisionExported($branch->getLastCommitId()) && $branch->hasUnfinishedBuild()|| $force) {
+
+try {
+if (!$branch->update("all" == $build_type ? NULL : $build_type)) {
+goto out_here;
+}
+} catch (\Exception $e) {
+$err_msg = $e->getMessage();
+goto out_here;
+}
+$last_rev = $branch->getLastRevisionId();
+$prev_rev = $branch->getPreviousRevision();
+echo "\tprevious revision was: $prev_rev\n";
+echo "\tlast revision is: $last_rev\n";
+
+$have_build_run = true;
+echo "processing revision $last_rev\n";
+$build_dir_parent = $branch->config->getBuildLocation();
+if (!is_dir($build_dir_parent)) {
+if(!mkdir($build_dir_parent, 0777, true)) {
+echo "Couldn't create build location";
+exit(-1);
+}
+}
+if (strlen($last_rev) == 40) {
+$last_rev = substr($last_rev, 0, 7);
+}
+$src_original_path =  $branch->createSourceSnap($build_type, $last_rev);
+$toupload_dir = TMP_DIR . '/' . $branch_name . '/r' . $last_rev . '-builds/';
+if (!is_dir($toupload_dir)) {
+mkdir($toupload_dir, 0655, true);
+}
+if (!is_dir($toupload_dir . '/logs')) {
+mkdir($toupload_dir . '/logs', 0655, true);
+}
+copy($src_original_path . '.zip', $toupload_dir . '/' . $branch_name . '-src-r'. $last_rev . '.zip');
+$builds = $branch->getBuildList('windows');
+$has_build_errors = false;
+$build_errors = array();
+foreach ($builds as $build_name) {
+if ($build_type != 'all') {
+if ($build_name != $build_type) {  // i.e. nts-windows-vc9-x86
+continue;
+}
+else  {
+echo "Starting build for $build_name\n";
+}
+}
+$build_src_path = realpath($build_dir_parent) . DIRECTORY_SEPARATOR . $build_name;
+$log = rm\exec_single_log('mklink /J ' . $build_src_path . ' ' . $src_original_path);
+if (!file_exists($build_src_path)) {
+throw new \Exception("Couldn't link '$src_original_path' to '$build_src_path'");
+}
+$build = $branch->createBuildInstance($build_name);
+try {
+$build->setSourceDir($build_src_path);
+echo "Updating dependencies\n";
+/* XXX Pass stability from script arg. */
+$ret = $build->updateDeps("staging");
+echo $ret["log"] . "\n";
+echo "running build in <$build_src_path>\n";
+$build->buildconf();
+if ($branch->config->getPGO() == 1)  {
+/* For now it is enough to just get a very same
+build of PHP to setup the environment. This
+only needs to be done once for setup. In further
+also, if there are any difference with TS/NTS,
+there might be some separate setup needed. */
+$build->pgoInitLock();
+if (!$build->isPgoSetup()) {
+echo "Preparing PGO training environment\n";
+$build->configure();
+$build->make();
+$build->pgoInit();
+}
+$build->pgoInitUnlock();
+echo "Creating PGI build\n";
+$build->configure(' "--enable-pgi" ');
+}
+else {
+$build->configure();
+}
+$build->make();
+/* $html_make_log = $build->getMakeLogParsed(); */
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+echo $build->log_buildconf;
+}
+if ($branch->config->getPGO() == 1)  {
+echo "Creating PGO build\n";
+try {
+$build->pgoTrain();
+$build->make(' clean-pgo');
+$build->configure(' "--with-pgo" ', false);
+$build->make();
+$html_make_log = $build->getMakeLogParsed();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+echo $build->log_buildconf;
+}
+}
+try {
+$build->makeArchive();
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+echo $build->log_buildconf;
+}
+if ($build->archive_path) {
+copy($build->archive_path, $toupload_dir . '/php-' . $branch_name_short . '-' . $build_name . '-r'. $last_rev . '.zip');
+}
+if ($build->archive_path) {
+copy($build->devel_path, $toupload_dir . '/php-devel-pack-' . $branch_name_short . '-' . $build_name . '-r'. $last_rev . '.zip');
+}
+if ($build->archive_path) {
+copy($build->debug_path, $toupload_dir . '/php-debug-pack-' . $branch_name_short . '-' . $build_name . '-r'. $last_rev . '.zip');
+}
+if ($build->test_path) {
+$tmp = str_replace(array('-ts', '-nts'), array('',''),  $build_name);
+copy($build->test_path, $toupload_dir . '/php-test-pack-' . $branch_name_short . '-' . $tmp . '-r'. $last_rev . '.zip');
+}
+file_put_contents($toupload_dir . '/logs/buildconf-' . $build_name . '-r'. $last_rev . '.txt', $build->log_buildconf);
+file_put_contents($toupload_dir . '/logs/configure-' . $build_name . '-r'. $last_rev . '.txt', $build->log_configure);
+file_put_contents($toupload_dir . '/logs/make-'      . $build_name . '-r'. $last_rev . '.txt', $build->log_make);
+file_put_contents($toupload_dir . '/logs/archive-'   . $build_name . '-r'. $last_rev . '.txt', $build->log_archive);
+if ($branch->config->getPGO() == 1)  {
+file_put_contents($toupload_dir . '/logs/pgo-'   . $build_name . '-r'. $last_rev . '.txt', $build->log_pgo);
+}
+$html_make_log = $build->getMakeLogParsed();
+file_put_contents($toupload_dir . '/logs/make-' . $build_name . '-r'. $last_rev . '.html', $html_make_log);
+copy(__DIR__ . '/../template/log_style.css', $toupload_dir . '/logs/log_style.css');
+$stats = $build->getStats();
+$json_filename = $build_name . '.json';
+$json_data = array(
+'stats' => $stats,
+'has_php_pkg'   => file_exists($build->archive_path),
+'has_debug_pkg' => file_exists($build->debug_path),
+'has_devel_pkg' => file_exists($build->devel_path),
+'has_test_pkg' => file_exists($build->test_path),
+);
+if ($stats['error'] > 0) {
+$has_build_errors = true;
+$build_errors[$build_name] = $build->compiler_log_parser->getErrors();
+$json_data['build_error'] = $build_errors[$build_name];
+}
+$json = json_encode($json_data);
+file_put_contents($toupload_dir . '/' . $json_filename, $json);
+
+//			$build->clean();
+rmdir($build_src_path);
+$branch->buildFinished();
+}
+$src_dir = $branch_name . '/r' . $last_rev;
+rm\upload_build_result_ftp_curl($toupload_dir, $src_dir);
+/* FIXME This is still not safe, locking needed! */
+foreach (["$toupload_dir/logs", $toupload_dir] as $path) {
+$items = scandir($path);
+foreach ($items as $item) {
+$full = $path . "/" . $item;
+if (is_file($full)) {
+@unlink($full);
+}
+}
+}
+//rm\rmdir_rf($toupload_dir);
+
+$branch->setLastRevisionExported($last_rev);
+}
+out_here:
+if ($err_msg) {
+echo "$err_msg\n";
+} else if (!$have_build_run) {
+echo "no new revision.\n";
+}
+if ($have_build_run) {
+/*Upload the branch DB */
+$try = 0;
+do {
+$status = rm\upload_file_curl($branch->db_path, $branch_name . '/' . basename($branch->db_path));
+$try++;
+} while ( $status === false && $try < 10 );
+$branch->resetBuildInfo();
+}
+//if ($has_build_errors) {
+//	rm\send_error_notification($branch_name, $build_errors, $branch->getPreviousRevision(), $last_rev, 'http://windows.php.net/downloads/snaps/' . $branch_name . '/r' . $last_rev);
+//} else {
+/* if no error, let update the snapshot page */
+//	rm\update_snapshot_page();
+//}
+echo "Done.\n";
+<?php
+namespace rmtools;
+include __DIR__ . '/BranchConfig.php';
+include __DIR__ . '/MakeLogParserVC.php';
+class PickleBuildVC
+{
+public $branch;
+public $build_name;
+/* now use the dev pickle version, as it needs some adjustments for the build bots */
+/* protected $pickle_phar = 'c:\\apps\\bin\\pickle.phar'; */
+protected $pickle_phar = 'c:\\php-sdk\\pickle\\bin\pickle';
+protected $env;
+protected $sdk_base;
+protected $int_dir;
+protected $log_dir;
+protected $sdk_dir;
+protected $pickle_cmd;
+public function __construct(PickleBranch $branch, $build_name)
+{
+$this->branch = $branch;
+$this->build_name = $build_name;
+$this->int_dir = tempnam(TMP_DIR, 'pickle');
+unlink($this->int_dir);
+if (!file_exists($this->int_dir) && !mkdir($this->int_dir)) {
+throw new \Exception("Couldn't create temporary dir");
+}
+
+$this->log_dir = $this->int_dir . DIRECTORY_SEPARATOR . "pickle_logs";
+if (!mkdir($this->log_dir)) {
+throw new \Exception("Couldn't create log dir");
+}
+/* Use --no-ansi for now for better parsing if needed. Should tweak pickle to support --xml/--json */
+$this->pickle_cmd = PHP_BINARY . " " . $this->pickle_phar . " --no-ansi ";
+$this->compiler = $branch->config->builds[$build_name]['compiler'];
+$this->architecture = $branch->config->builds[$build_name]['arch'];
+$this->thread_safe = (boolean)$branch->config->builds[$build_name]['thread_safe'];
+$this->pecl_deps_base = $branch->config->builds[$build_name]['pecl_deps_base'];
+if (!file_exists($this->pecl_deps_base)) {
+throw new \Exception("Dependency libs not found under '{$this->pecl_deps_base}'");
+}
+$this->core_deps_base = $branch->config->builds[$build_name]['core_deps_base'];
+if (!file_exists($this->core_deps_base)) {
+throw new \Exception("Dependency libs not found under '{$this->core_deps_base}'");
+}
+$vc_env_prefix = strtoupper($this->compiler);
+if ($this->architecture == 'x64') {
+$vc_env_prefix .= '_X64_';
+} else {
+$vc_env_prefix .= '_';
+}
+$path = getenv($vc_env_prefix . 'PATH');
+if (empty($path)) {
+include __DIR__ . '/../data/config.php';
+/* use default config */
+$env = $custom_env;
+} else {
+$env = array();
+$env['PATH'] = getenv($vc_env_prefix . 'PATH') . ';' . getenv('PATH') ;
+$env['INCLUDE'] = getenv($vc_env_prefix . 'INCLUDE');
+$env['LIB'] = getenv($vc_env_prefix . 'LIB');
+}
+if (!$env['INCLUDE'] || !$env['LIB']) {
+$env['INCLUDE'] = getenv('INCLUDE');
+$env['LIB'] = getenv('LIB');
+}
+$env['TMP'] = $env['TEMP'] = getenv('TEMP');
+$env['SystemDrive'] = getenv('SystemDrive');
+$env['SystemRoot'] = getenv('SystemRoot');
+if (!isset($env['BISON_SIMPLE'])) {
+$env['BISON_SIMPLE'] = getenv('BISON_SIMPLE');
+}
+$env['CPU'] = "i386";
+$env['APPVER'] = "6.0";
+if ($branch->config->getDebug() == 0) {
+$env['NODEBUG'] = "1";
+}
+if (strcasecmp($this->architecture, 'x64') == 0) {
+$env['CPU'] = "AMD64";
+}
+$this->sdk_path = $branch->config->getBuildFromName($build_name)["sdk_path"];
+$env["PATH"] = "{$this->sdk_path};" . $env["PATH"];
+
+$env["PATH"] = "c:\\apps\\git\\bin;c:\\apps\\bin;" . $env["PATH"];
+$this->env = $env;
+}
+public function __destruct()
+{
+$this->clean();
+}
+public function getPickleCmd()
+{
+return $this->pickle_cmd;
+}
+public function setSdkDir($sdk_dir)
+{
+$this->sdk_dir = $sdk_dir;
+}
+function clean()
+{
+if (is_dir($this->int_dir)) {
+/* XXX something seems to be missing in unlink(), .git has some ACLs so then
+PHP cannot handle the removal of the several items in it. Using the
+system commando helps with that. */
+$items = scandir($this->int_dir);
+foreach ($items as $item) {
+$dir = "{$this->int_dir}/$item";
+if (is_dir("$dir/.git")) {
+@shell_exec("del /F /S /Q /A " . realpath($dir) . DIRECTORY_SEPARATOR . ".git");
+}
+}
+rmdir_rf($this->int_dir);
+}
+}
+public function info()
+{
+}
+public function getPickleCmdToRun(PickleExt $ext)
+{
+$conf_opts = $ext->getConfigureOpts();
+if ($conf_opts && file_exists($conf_opts)) {
+$ext_config_opt = "--with-configure-options=$conf_opts";
+} else {
+$ext_config_opt = "--defaults";
+}
+/* XXX check if --quiet needed */
+$opts = " --binary "
+. " $ext_config_opt "
+. "--tmp-dir={$this->int_dir} "
+. "--pack-logs "
+. "release "
+. $ext->getPkgUri();
+$cmd = $this->pickle_cmd . " " . $opts;
+return $cmd;
+}
+/* XXX read the configure options from the extconfig, create the options file to feed pickle */
+public function build(PickleExt $ext)
+{
+$old_cwd = getcwd();
+chdir(TMP_DIR);
+$cmd = $this->getPickleCmdToRun($ext);
+$ret = exec_single_log($cmd, NULL, $this->env);
+$ext->cleanConfigureOpts();
+chdir($old_cwd);
+return $ret;
+}
+public function archive()
+{
+}
+public function getIntDir()
+{
+return $this->int_dir;
+}
+public function getEnv()
+{
+return $this->env;
+}
+}
+<?php
+namespace rmtools;
+class PickleDb extends \SQLite3
+{
+protected $db_path;
+public function __construct($db_path)
+{
+$this->db_path = $this->createDir($db_path);
+}
+protected function isSlash($c)
+{
+return '\\' == $c || '/' == $c;
+}
+protected function buildUriLocalPath($uri)
+{
+if (!$this->isSlash($uri[0])) {
+$uri = DIRECTORY_SEPARATOR . $uri;
+}
+$uri = str_replace('/', DIRECTORY_SEPARATOR, $uri);
+return $this->db_path . $uri;
+}
+public function uriExists($uri)
+{
+return file_exists($this->buildUriLocalPath($uri));
+}
+public function getUri($uri)
+{
+$fname = $this->buildUriLocalPath($uri);
+if (!file_exists($fname)) {
+return false;
+}
+return file_get_contents($fname);
+}
+public function saveUriJson($uri, $data)
+{
+$json = json_encode($data, JSON_PRETTY_PRINT);
+return $this->saveUri($uri, $json);
+}
+public function saveUri($uri, $data)
+{
+$fname = $this->buildUriLocalPath($uri);
+$dir = dirname($fname);
+if (!is_dir($dir)) {
+$this->createDir($dir);
+}
+return strlen($data) == file_put_contents($fname, $data, LOCK_EX);
+}
+public function getUriJson($uri)
+{
+return json_decode($this->getUri($uri), true);
+}
+public function delUri($uri)
+{
+$fname = $this->buildUriLocalPath($uri);
+if (!file_exists($fname)) {
+return true;
+}
+return unlink($fname);
+}
+protected function createDir($path, $rec = true)
+{
+if (!is_dir($path)) {
+if (!mkdir($path, 0777, $rec)) {
+throw new \Exception("failed to create '$path'");
+}
+}
+return realpath($path);
+}
+}
+<?php
+namespace rmtools;
+include __DIR__ . '/PickleBuildVC.php';
+/* Primitive branch which maps to some unversioned local source tree. It'll not care about any revisions, etc. */
+class PickleBranch {
+public $config;
+public $builds;
+public function __construct($config_path)
+{
+if (!is_readable($config_path)) {
+throw new \Exception('Cannot open config data <' . $config_path . '>');
+}
+$this->config = new BranchConfig($config_path);
+$this->addBuildList();
+}
+private function addBuildList()
+{
+$builds = $this->config->getBuildList();
+if (!empty($builds)) {
+$this->builds = array();
+foreach ($builds as $n => $v) {
+$this->builds[] = $n;
+}
+} else {
+$this->builds = NULL;
+}
+}
+public function update()
+{
+// pass
+}
+public function hasNewRevision()
+{
+return false;
+}
+public function export($revision = false, $build_type = false, $zip = false, $is_zip = false)
+{
+// TODO
+}
+public function createSourceSnap($build_type = false, $revision = false)
+{
+return $this->export($revision, $build_type, true);
+}
+public function setLastRevisionExported($last_rev)
+{
+// pass
+}
+public function getLastRevisionExported()
+{
+return NULL;
+}
+public function getLastRevisionId()
+{
+return NULL;
+}
+public function getPreviousRevision()
+{
+return NULL;
+}
+function getBuildList($platform)
+{
+$builds = array();
+foreach ($this->builds as $build_name) {
+$build = $this->config->getBuildFromName($build_name);
+if (isset($build['platform']) && $build['platform'] == $platform) {
+$builds[] = $build_name;
+}
+}
+return $builds;
+}
+function createBuildInstance($build_name)
+{
+$build = NULL;
+$build_config = $this->config->getBuildFromName($build_name);
+if (!$build_config) {
+throw new \Exception("Invalid build name <$build_name>");
+}
+$compiler	= strtolower($build_config['compiler']);
+switch ($compiler) {
+case 'vc14':
+case 'vc12':
+case 'vc11':
+case 'vc9':
+case 'vc6':
+$build = new PickleBuildVC($this, $build_name);
+break;
+case 'icc':
+case 'gcc':
+case 'clang':
+throw new \Exception("$compiler not supported yet. Not implemented");
+break;
+}
+return $build;
+}
+}
+<?php
+namespace rmtools;
+class Pickle
+{
+
+protected $pickle_phar = 'c:\apps\bin\pickle.phar';
+public function __construct($pickle = NULL)
+{
+if ($pickle) {
+$this->pickle_phar = $pickle;
+}
+}
+}
+<?php
+namespace rmtools;
+class PeclMail {
+protected $buffer_file;
+protected $aggregate;
+protected $aggregated_sent = false;
+protected $buffer = array (
+'from' => array(),
+'to' => array(),
+'subject' => '',
+'text' => '',
+'attachment' => array()
+);
+public function __construct($pkg_path, $aggregate = false)
+{
+if (!file_exists($pkg_path)) {
+throw new \Exception("'$pkg_path' does not exist");
+}
+$this->buffer_file = TMP_DIR . DIRECTORY_SEPARATOR . md5($pkg_path);
+$this->aggregate = (boolean)$aggregate;
+if ($this->aggregate && file_exists($this->buffer_file)) {
+$tmp = file_get_contents($this->buffer_file);
+$this->buffer = unserialize($tmp);
+}
+}
+public function saveState()
+{
+$tmp = serialize($this->buffer);
+$ret = file_put_contents($this->buffer_file, $tmp);
+}
+public function cleanup()
+{
+unlink($this->buffer_file);
+}
+public function isAggregated()
+{
+return $this->aggregate;
+}
+/* XXX the state with from, to and subject is somehow unclean */
+public function xmail($from, $to, $subject, $text, array $attachment = array())
+{
+if (!$this->aggregate) {
+return xmail($from, $to, $subject, $text, $attachment);
+}
+/* aggregate all the stuff below */
+$this->buffer['to'][] = $to;
+$this->buffer['from'][] = $from;
+/* subject can't be aggregated anyway , or?*/
+$this->buffer['subject'] = $subject;
+$this->buffer['text'] = $this->buffer['text'] ."\n" . $text;
+$this->buffer['attachment'] = array_merge($attachment, $this->buffer['attachment']);
+$this->saveState();
+/* fake we've sent it */
+return true;
+}
+public function mailAggregated($from, $to, $subject, $open, $close, $with_attachment)
+{
+if (!$to) {
+$to = implode(',', array_unique($this->buffer['to']));
+}
+if (!$from) {
+$from = implode(',', array_unique($this->buffer['from']));
+}
+$text = "$open\n\n" . $this->buffer['text'] . "\n\n$close";
+$attachment = $with_attachment ? $this->buffer['attachment'] : array();
+$this->aggregated_sent = true;
+
+return xmail($from, $to, $subject, $text, $attachment);
+}
+public function setFrom($from)
+{
+$this->buffer['from'] = $from;
+}
+public function setTo($to)
+{
+$this->buffer['to'] = $to;
+}
+public function setSubject($subject)
+{
+$this->buffer['subject'] = $subject;
+}
+}
+<?php
+namespace rmtools;
+class PeclDb extends \SQLite3 {
+public function __construct($db_path, $autoinit = true)
+{
+$flags = SQLITE3_OPEN_READWRITE;
+$existent = file_exists($db_path);
+if (!$existent) {
+$flags |= SQLITE3_OPEN_CREATE;
+}
+
+$this->open($db_path);
+if (!$existent && $autoinit) {
+$this->initDb();
+}
+}
+public function initDb()
+{
+$sql = "CREATE TABLE ext_release (ext_name STRING, ext_version STRING, ts_built INTEGER);";
+$this->exec($sql);
+}
+public function add($name, $version, $force = false)
+{
+if ($force) {
+$this->remove($name, $version);
+}
+if ($this->exists($name, $version)) {
+return false;
+}
+$name = $this->escapeString($name);
+$version = $this->escapeString($version);
+$sql = "INSERT INTO ext_release (ext_name, ext_version, ts_built) VALUES ('$name', '$version', 0);";
+$this->exec($sql);
+return true;
+}
+public function remove($name, $version)
+{
+$name = $this->escapeString($name);
+$version = $this->escapeString($version);
+$sql = "DELETE FROM ext_release WHERE ext_name = '$name' AND ext_version = '$version';";
+$this->exec($sql);
+}
+public function exists($name, $version, $where = '')
+{
+/* cant check such thing, so trust :) */
+if ($where) {
+$where = "AND $where";
+}
+$name = $this->escapeString($name);
+$version = $this->escapeString($version);
+$sql = "SELECT ts_built FROM ext_release WHERE ext_name = '$name' AND ext_version = '$version' $where;";
+$res = $this->query($sql);
+$ret = false !== $res->fetchArray(SQLITE3_NUM);
+//return $res->numColumns() > 0;
+$res->finalize();
+return $ret;
+}
+public function done($name, $version)
+{
+/* XXX That's an assumption as the latest timestamp should be about 30 mit old.
+Need to extend pecl.php to set the real statuses when in't really done */
+return $this->exists($name, $version, "ts_built - " . time() . " > 1800");
+}
+public function dump($where = '')
+{
+/* cant check such thing, so trust :) */
+if ($where) {
+$where = "WHERE $where";
+}
+$res = $this->query("SELECT * FROM ext_release $where ORDER BY ext_name, ext_version ASC");
+echo "DUMP ext_release " . PHP_EOL . PHP_EOL;
+while(false !== ($row = $res->fetchArray(SQLITE3_ASSOC))) {
+foreach ($row as $col => $val) {
+echo "$col=$val" . PHP_EOL;
+}
+echo PHP_EOL;
+}
+$res->finalize();
+}
+public function dumpQueue()
+{
+$this->dump("ts_built <= 0");
+}
+public function touch($name, $version)
+{
+$name = $this->escapeString($name);
+$version = $this->escapeString($version);
+$sql = "UPDATE ext_release SET ts_built=" . time() . " WHERE lower(ext_name) = lower('$name') AND lower(ext_version) = lower('$version');";
+$this->exec($sql);
+}
+}
+<?php
+namespace rmtools;
+include __DIR__ . '/MakeLogParser.php';
+class MakeLogParserVc extends MakeLogParser {
+function parse($path, $root_src_dir)
+{
+$this->stats = array('warning' => 0, 'error' => 0);
+$lines = file($path);
+if (empty($lines)) {
+return NULL;
+}
+$line_nr = 1;
+if ($root_src_dir && $root_src_dir[strlen($root_src_dir) -1] != '\\') {
+$root_src_dir .= '\\';
+}
+//win32\build\deplister.c(50) : warning C4090: 'function' : different 'const' qualifiers
+$pcre = '/(error|warning)/';
+$log = array();
+foreach ($lines as $line) {
+$file = '';
+$level = '';
+/* $out = '#' . ($line_nr++) . ' ';*/
+$res = preg_match($pcre, $line);
+if ($res) {
+/* absolute path + error/warning */
+$txt = $line;
+$re1='([a-z]:\\\\(?:[-\\w\\.\\d]+\\\\)*(?:[-\\w\\.\\d]+)?)';	# Windows Path 1
+$re2='.*?';	# Non-greedy match on filler
+$re3='(\\d+)';	# Integer Number 1
+$re4='.*?';	# Non-greedy match on filler
+$re5='((?:[a-z][a-z]+))';	# Word 1
+$re6='.*?';	# Non-greedy match on filler
+$re7='((?:[a-z][a-z]*[0-9]+[a-z0-9]*))';	# Alphanum 1
+$re8 =':(.*?)$';
+if (preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6.$re7.$re8."/is", $txt, $matches))
+{
+$winpath1  = $matches[1][0];
+$int1      = $matches[2][0];
+$word1     = $matches[3][0];
+$alphanum1 = $matches[4][0];
+$error_msg = trim(str_replace(array("\r","\n"), array('',''),$matches[5][0]));
+$row = array(
+'file'    => $winpath1,
+'line'    => $int1,
+'level'   => $word1,
+'code'    => $alphanum1,
+'message' => $error_msg
+);
+} else {
+/* relative path + error/warning */
+$re1='(.*?)';	# Non-greedy match on filler
+$re2='';	# Uninteresting: int
+$re3='';	# Non-greedy match on filler
+$re4='\((\\d+)\)';	# Integer Number 1
+$re5='.*?';	# Non-greedy match on filler
+$re6='((?:[a-z][a-z]+))';	# Word 1
+$re7='.*?';	# Non-greedy match on filler
+$re8='((?:[a-z][a-z]*[0-9]+[a-z0-9]*))';	# Alphanum 1
+$re9 =':(.*?)$';
+if (preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6.$re7.$re8.$re9."/is", $txt, $matches))
+{
+$path=$matches[1][0];
+$int1=$matches[2][0];
+$word1=$matches[3][0];
+$alphanum1=$matches[4][0];
+$error_msg=trim(str_replace(array("\r","\n"), array('',''),$matches[5][0]));
+/** @noinspection PhpUnusedLocalVariableInspection */
+/*$out .= "match 2: ($path) ($int1) ($word1) ($alphanum1) ($error_msg)\n";*/
+$row = array(
+'file'    => $path,
+'line'    => $int1,
+'level'   => $word1,
+'code'    => $alphanum1,
+'message' => $error_msg
+);
+} else {
+/* cl.exe, link, etc. + error/warning */
+$re1='((?:[a-z][a-z]+))';	# Word 1
+$re2='.*?';	# Non-greedy match on filler
+$re3='((?:[a-z][a-z]+))';	# Word 2
+$re4='.*?';	# Non-greedy match on filler
+$re5='((?:[a-z][a-z]*[0-9]+[a-z0-9]*))';	# Alphanum 1
+$re6 =':(.*?)$';
+if (preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6."/is", $txt, $matches))
+{
+$word1=$matches[1][0];
+$word2=$matches[2][0];
+$alphanum1=$matches[3][0];
+$error_msg = trim(str_replace(array("\r","\n"), array('',''), $matches[4][0]));
+/* $out .= "match 3: ($word1) ($word2) ($alphanum1) ($error_msg)\n";*/
+if (substr($alphanum1, 0, 3) == 'LNK') {
+if (strpos($txt, '.lib') || strpos($txt, '.obj')) {
+$pos = strpos($txt, ':');
+$file = substr($txt, 0, $pos);
+$re  = preg_match('/^.*: (warning|error) LNK[0-9]+:.*$/', $txt, $matches);
+if ($re) {
+$level = $matches[1];
+} else {
+$level = '';
+}
+}
+}
+$row = array(
+'file'    => $file,
+'line'    => '',
+'level'   => $level,
+'code'    => $alphanum1,
+'message' => $error_msg
+);
+} else {
+$row = array(
+'file'    => '',
+'line'    => '',
+'level'   => '',
+'code'    => '',
+'message' => $txt
+);
+}
+}
+}
+} else {
+continue;
+}
+$row['file'] = str_ireplace($root_src_dir, '', $row['file']);
+$row['section'] = strtolower(dirname($row['file']));
+$row['file'] = str_ireplace($row['section'] . '\\', '', $row['file']);
+if ($row['level'] == 'fatal') {
+$row['level'] = 'error';
+}
+if (isset($this->stats[$row['level']])) {
+$this->stats[$row['level']]++;
+}
+$log[] = $row;
+}
+$this->log = $log;
+return true;
+}
+}
+<?php
+namespace rmtools;
+class MakeLogParser {
+public $log;
+public $stats;
+public $diff = NULL;
+function toHtml($title)
+{
+/** @noinspection PhpUnusedLocalVariableInspection */
+$log = $this->log;
+ob_start();
+include __DIR__ . '/../template/make_log.tpl.php';
+$html = ob_get_contents();
+ob_end_clean();
+return $html;
+}
+function getErrors()
+{
+if ($this->stats['error'] > 0) {
+$res = array();
+foreach ($this->log as $e) {
+if ($e['level'] == 'error' || $e['level'] == 'fatal') {
+$res[] = $e;
+}
+}
+return $res;
+} else {
+return NULL;
+}
+}
+function diff($prev) {
+$result = array();
+foreach ($cur as $k => $v) {
+if (array_key_exists($k, $prev)) {
+if (is_array($v)) {
+$tmp_ar = log_diff($v, $prev[$k]);
+if (count($tmp_ar)) { $result[$k] = $tmp_ar; }
+} else {
+if ($v != $prev[$k]) {
+$result[$k] = $v;
+}
+}
+} else {
+$result[$k] = $v;
+}
+}
+return $result;
+}
+}
+<?php
+namespace rmtools;
+class Build {
+static function createBuild()
+{
+}
+}
+<?php
+namespace rmtools;
+$required_exts = array(
+'openssl',
+'curl',
+'sqlite3',
+'simplexml',
+'dom',
+'json',
+'mbstring',
+'zlib',
+);
+foreach ($required_exts as $ext) {
+if (!extension_loaded($ext)) {
+die("'$ext' extension is not loaded but required, full rquired extensions list: " . implode(", ", $required_exts));
+}
+}
+$tmp = getenv('PHP_RMTOOLS_TMP_PATH');
+if (!$tmp) {
+throw new \Exception("Temporary path '$tmp' doesn't exist");
+}
+define('TMP_DIR', $tmp);
+/* XXX might remove this later */
+$custom_env = array();
