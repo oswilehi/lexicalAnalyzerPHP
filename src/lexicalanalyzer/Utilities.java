@@ -70,6 +70,12 @@ public class Utilities {
                     System.out.print(lexer.lexeme.toLowerCase());
                     jTextArea1.append(lexer.lexeme.toLowerCase());
                     break;
+                case CONSTANTS_DEFINE:
+                    System.out.print(lexer.lexeme);
+                    int firtSimpleComma = lexer.lexeme.indexOf("'");
+                    int firtDoubleComma = lexer.lexeme.indexOf('"');
+                    jTextArea1.append(Utilities.constanstDefine(firtSimpleComma, firtDoubleComma, lexer.lexeme));
+                    break;    
                 case SYMBOLS:
                     System.out.print(lexer.lexeme);
                     jTextArea1.append(lexer.lexeme);
@@ -105,15 +111,47 @@ public class Utilities {
                     String dbAccessField = lexer.lexeme.substring(firstComma+1, lexer.lexeme.length()-2);
                     jTextArea1.append("$recordset['"+dbAccessField.toUpperCase()+"']");
                     break;
-                case ERROR:                    
+                case ERROR:
+                    String[] error = lexer.lexeme.split(",");
+                    String tokenThatFailed = error[1];
+                    String line = error[0];
                     System.out.print("ERROR"  + lexer.lexeme);
-                    listOfErrors.add("Error en la linea " + lexer.lexeme);
+                    listOfErrors.add("Error, no se reconocio el siguiente token " + tokenThatFailed + " en la linea " + line);
                     break;
                 default:
                     resultado=resultado;
             }
         }
-        if (!listOfErrors.isEmpty())
+        if (!listOfErrors.isEmpty()){
             jTextArea1.setText("");
+            while(!listOfErrors.isEmpty())
+                jTextArea1.append(listOfErrors.removeFirst() + "\n");
+        }
+            
+    }
+    
+    public static String constanstDefine(int simpleComma, int doubleComma, String word){
+        int indexOfComma;
+        String correctConstant = "";
+        if (simpleComma == -1)
+            indexOfComma = doubleComma+1;
+        else
+            indexOfComma = simpleComma+1;
+        
+        char[] wordArray = word.toCharArray();
+        
+        for(int i = 0; i < indexOfComma; i++)
+            correctConstant = correctConstant + wordArray[i];
+        
+        int c = indexOfComma;
+        while(!Character.toString(wordArray[c]).equals("'") && !Character.toString(wordArray[c]).equals('"')){
+            correctConstant = correctConstant + Character.toString(wordArray[c]).toUpperCase();
+            c++;
+        }
+        
+        for(int i = c; i < wordArray.length; i++)
+            correctConstant = correctConstant + wordArray[i];
+               
+        return correctConstant;
     }
 }

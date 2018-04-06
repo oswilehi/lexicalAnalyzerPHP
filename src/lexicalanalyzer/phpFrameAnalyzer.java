@@ -5,10 +5,14 @@
  */
 package lexicalanalyzer;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -31,6 +35,8 @@ public class phpFrameAnalyzer extends javax.swing.JFrame {
     
     public phpFrameAnalyzer() {
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -64,6 +70,11 @@ public class phpFrameAnalyzer extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         saveFile_btn.setText("Guardar archivo");
+        saveFile_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveFile_btnActionPerformed(evt);
+            }
+        });
 
         openFile_btn.setText("Abrir Archivo");
         openFile_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +178,34 @@ public class phpFrameAnalyzer extends javax.swing.JFrame {
             Logger.getLogger(phpFrameAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_analyze_btnActionPerformed
+
+    private void saveFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFile_btnActionPerformed
+        // TODO add your handling code here:
+        if  ("".equals(jTextArea2.getText()))
+            analyze_btn.setEnabled(false);
+        
+        else{
+        JFileChooser saveHackFile = new JFileChooser();
+        File hackFileToSave = new File(fileName+".out");
+        saveHackFile.setSelectedFile(hackFileToSave);
+        saveHackFile.setDialogTitle("Guardar archivo");   
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("OUT","out");
+        saveHackFile.setFileFilter(filter);
+        int userSelection = saveHackFile.showSaveDialog(saveHackFile);
+ 
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            hackFileToSave = saveHackFile.getSelectedFile();            
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(hackFileToSave)))
+            {
+                bw.write(jTextArea1.getText());
+            } 
+            catch (IOException ex) {     
+                Logger.getLogger(phpFrameAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Save as file: " + hackFileToSave.getAbsolutePath());
+        }
+        }
+    }//GEN-LAST:event_saveFile_btnActionPerformed
 
     /**
      * @param args the command line arguments
