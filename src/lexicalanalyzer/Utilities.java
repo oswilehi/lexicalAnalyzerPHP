@@ -108,8 +108,15 @@ public class Utilities {
                     System.out.print(lexer.lexeme);
                     int firstComma = lexer.lexeme.indexOf("'");
                     int lastComma = lexer.lexeme.lastIndexOf("'");
+                    int parenthesis = lexer.lexeme.indexOf("[");
+                    
+                    String variable="";
+                    char[] lexeme = lexer.lexeme.toCharArray();                   
+                    for (int i = 0; i < parenthesis; i++)
+                        variable = variable + lexeme[i];
+
                     String dbAccessField = lexer.lexeme.substring(firstComma+1, lexer.lexeme.length()-2);
-                    jTextArea1.append("$recordset['"+dbAccessField.toUpperCase()+"']");
+                    jTextArea1.append(variable + "['"+dbAccessField.toUpperCase()+"']");
                     break;
                 case ERROR:
                     String[] error = lexer.lexeme.split(",");

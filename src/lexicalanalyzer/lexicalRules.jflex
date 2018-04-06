@@ -20,22 +20,23 @@ logicalVal=("true"|"false")
 intVal=({digits}+)
 realVal=(({digits}*[\.]{digits}+)|({digits}+[\.]{digits}*))
 realExpVal=([+-]?(({digits}|{realVal})[eE][+-]?{digits}))
-stringVal=(('([^'\n\\]|\\.)*')|(\"([^\"\n\\]|\\.)*\"))
+stringVal=(('([^'\\]|\\.)*')|(\"([^\"\\]|\\.)*\"))
 constants2=("define("(\"|'){ID}(\"|')","(({whiteSpace}*{stringVal})|{whiteSpace}*{variable})")")
 ID=([a-zA-Z_]([a-zA-Z_0-9])*)
-variable=("$"{ID})
+variable=(("$"{ID}{whiteSpace}*"="{whiteSpace}*({intVal}|{stringVal}|{logicalVal}))|("$"{ID}))
 defaultConstVariables=("__CLASS__"|"__DIR__"|"__FILE__"|"__FUNCTION__"|"__LINE__"|"__METHOD__"|"__NAMESPACE__"|"__TRAIT__")
 defaultVariablesUpperCase=("$GLOBALS"|"$_SERVER"|"$_GET"|"$_POST"|"$_FILES"|"$_REQUEST"|"$_SESSION"|"$_ENV"|"$_COOKIE"|"$HTTP_RAW_POST_DATA")
 defaultVariablesLowerCase=("$http_response_header"|"$argc"|"$argv"|"$php_errormsg")
-symbols=("("|")"|"{"|"}"|";"|":"|"<?php"|"?>"|\.|"["|"]"|","|"@"|"?")
-commentsSymbols=((((\#)|(\/\/))[^\r\n]*)|(\/\*.*[\s\S\n].*\*\/))
-accessDataBase=("$recordset["\'{ID}\'"]")
+symbols=("("|")"|"{"|"}"|";"|":"|"<?php"|"?>"|\.|"["|"]"|","|"@"|"?"|"9pt")
+commentsSymbols=((((\#)|(\/\/))[^\r\n]*)|(("/*")~("*/")))
+commentsMultilineError = (("/*")~(\n))
+accessDataBase=({variable}"["\'{ID}\'"]")
 typesVal = ({intVal}|{logicalVal}|{realVal}|{realExpVal}|{stringVal})
+errorOfComparisonSymbols = ("=!=")
 typesOfOperators = ({arithmeticOP}|{logicalOP}|{compareOP})
 regexInUpperCase = ({defaultConstVariables}|{defaultVariablesUpperCase})
 regexInLowerCase = ({keywords}|{defaultVariablesLowerCase}|{logicalVal})
-
-
+regexRealVar = ({variable}{whiteSpace}*"="{whiteSpace}*({stringVal}|{intVal}|{logicalVal}))
 
 %{
 public String lexeme="";
@@ -53,7 +54,8 @@ public String lexeme="";
 {variable} {lexeme = yytext(); return VAR;}
 {typesOfOperators} {lexeme = yytext(); return TYPES_OP;}
 {ID} {lexeme = yytext(); return ID;}
-. {lexeme = Integer.toString(yyline + 1) + "," + yytext(); return ERROR;}
+//{intVal}({ID}|{variable}) {lexeme = Integer.toString(yyline + 1) + "," + yytext(); return ERROR;}
+{commentsMultilineError}|.  | {errorOfComparisonSymbols} {lexeme = Integer.toString(yyline + 1) + "," + yytext(); return ERROR;}
 
 
 
