@@ -18,10 +18,10 @@ public class LexicalAnalyzer {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String jflexString = "/lexicalAnalyzerPHP/../src/lexicalanalyzer/lexicalRules.jflex";
-        File tempFile = new File(jflexString);
         
-        generateJavaFile(jflexString);
+        File tempFile = new File("");
+        String jflexString = "/src/lexicalanalyzer/lexicalRules.jflex";
+        generateJavaFile(tempFile.getAbsolutePath()+jflexString);
         tempFile.delete();
         phpFrameAnalyzer analyzerWindow = new phpFrameAnalyzer();
         analyzerWindow.setVisible(true);
